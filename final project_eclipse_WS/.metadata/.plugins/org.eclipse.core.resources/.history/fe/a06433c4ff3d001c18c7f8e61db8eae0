@@ -1,0 +1,59 @@
+/*
+ * uart.c
+ *
+ *  Created on: 29 Oct 2021
+ *      Author: pvc
+ */
+#define F_CPU 8000000UL
+#include"uart.h"
+#include<avr/io.h>
+#include"common_macros.h"
+
+void UART_init(const UART_ConfigType *ConfigType)
+{
+	uint16 ubrr_value = 0;
+	UCSRA  = (1 << U2X);
+	UCSRB = (1 << RXEN) | (1 << TXEN);
+	UCSRB |=(((ConfigType->character_size) & 0x04) << UCSZ2);
+	UCSRC = (((ConfigType->character_size) & 0x03) << UCSZ0);
+	UCSRC |=(((ConfigType->parity_mood) & 0x03) << UPM0);
+	UCSRC |=((ConfigType->stop_bit_num) << USBS);
+	ubrr_value = (uint16)((F_CPU / ((ConfigType->baude_rate) * 8UL)) - 1);
+	UBRRH = ubrr_value >> 8;
+	UBRRL = ubrr_value;
+}
+
+uint8 UART_receiveByte(void)
+{
+	while(BIT_IS_CLEAR(UCSRA,RXC));
+	return UDR;
+}
+
+void UART_sendByte(uint8 data)
+{
+	while(BIT_IS_CLEAR(UCSRA,UDRE));
+	UDR = data;
+}
+
+void UART_sendString(uint8 *Str)
+{
+	uint8 i = 0;
+	while(Str[i] != '\0')
+	{
+		UART_sendByte(Str[i]);
+		i++;
+	}
+
+}
+
+void UART_receiveString(uint8 *Str)
+{
+	uint8 i = 0;
+	Str[i] = UART_receiveByte();
+	while(Str[i] != '#')
+	{
+		i++;
+		Str[i] = UART_receiveByte();
+	}
+	Str[i] = '\0';
+}

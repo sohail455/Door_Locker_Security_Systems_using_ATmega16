@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;MCU1/kepad_with-eeprom.c&apos; to &apos;MCU1.c&apos;" description="Rename resource &apos;kepad_with-eeprom.c&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="kepad_with-eeprom.c" name="MCU1.c" stamp="1635691609317" updateReferences="true"/>
+</session>

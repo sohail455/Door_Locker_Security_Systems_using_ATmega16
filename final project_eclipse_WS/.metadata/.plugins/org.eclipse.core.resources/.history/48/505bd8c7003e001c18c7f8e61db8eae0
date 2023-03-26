@@ -1,0 +1,24 @@
+/****************************************************************************************
+ * File Name: MCU1.c
+ *
+ * Description: source file for MCU1 driver.
+ *
+ * Author: Eng / Sohail Talaat
+ *
+ * *************************************************************************************/
+#include"HMI.h"
+
+
+
+int main(void)
+{
+	UART_ConfigType uart_configtype={9600,EIGHT_BITS,DISABLE,ONE_BIT};
+	UART_init(&uart_configtype);
+	LCD_init();
+	get_initial_password();
+	while(1)
+	{
+		main_option();
+	}
+}
+

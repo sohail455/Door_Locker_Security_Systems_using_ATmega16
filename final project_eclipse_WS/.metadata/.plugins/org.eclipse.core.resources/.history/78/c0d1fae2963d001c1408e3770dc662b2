@@ -1,0 +1,173 @@
+/****************************************************************************************
+ * File Name:
+ *
+ * Description:
+ *
+ * Author: Eng / Sohail Talaat
+ *
+ * *************************************************************************************/
+#define F_CPU 8000000UL
+#include"uart.h"
+#include<string.h>
+#include<util/delay.h>
+#include"twi.h"
+#include"external_eeprom.h"
+#include"lcd.h"
+#include"dc_motor.h"
+#include"timer0.h"
+#include<avr/io.h>
+#include<avr/interrupt.h>
+#include"common_macros.h"
+#include"buzzer.h"
+#define NEW_PASSWORD 0x01
+#define ready  0x02
+#define COMPARE  0x03
+#define MATCHED 0x04
+#define NOT_MATCHED 0x05
+#define OPEN_DOOR 0x07
+#define FAIL 0x08
+#define PASSWORD_SIZE  6
+#define EEPROM_ADDRESS  0x0000
+#define GATE_IS_OPEN 0x09
+#define GATE_IS_CLOSE 0x0A
+#define WARNING 0x0B
+#define SAFE 0x0C
+
+TIMER0_ConfigerType timer_configtype = {OVERFLOW_MOOD, CLOCK_1024, 0, 250};
+
+volatile static uint8 g_tick = 0;
+uint8 entered_password[PASSWORD_SIZE];
+uint8 password[PASSWORD_SIZE];
+
+void get_password(void)
+{
+	uint8 i;
+
+	for(i = 0; i < PASSWORD_SIZE - 1; i++)
+	{
+		UART_sendByte(ready);
+		entered_password[i] = UART_receiveByte();
+	}
+	entered_password[i] = '\0';
+	if(strcmp(password,entered_password) == 0)
+	{
+		while(UART_receiveByte() != ready);
+		UART_sendByte(MATCHED);
+	}
+	else
+	{
+		while(UART_receiveByte() != ready);
+		UART_sendByte(NOT_MATCHED);
+	}
+}
+
+void save_password(void)
+{
+	uint8 i;
+	for(i = 0; i < PASSWORD_SIZE - 1; i++)
+	{
+		UART_sendByte(ready);
+		EEPROM_writeByte((EEPROM_ADDRESS) + i, UART_receiveByte());
+		_delay_ms(10);
+	}
+	for( i = 0; i < 5; i++)
+	{
+		EEPROM_readByte((EEPROM_ADDRESS) + i, &password[i]);
+		_delay_ms(10);
+
+	}
+	password[i] = '\0';
+}
+
+void show_pass(uint8 *pass)
+{
+	for(uint8 i = 0; i < 5; i++)
+	{
+		LCD_intgerToString(pass[i]);
+		_delay_ms(10);
+	}
+}
+
+
+
+
+void open_mechanisim(void)
+{
+	g_tick++;
+	if(g_tick == 32*5)
+	{
+
+		DcMotor_Rotate(DC_MOTOR_ACW, 100);
+		UART_sendByte(GATE_IS_OPEN);
+	}
+	if(g_tick == 32*10)
+	{
+		DcMotor_Rotate(DC_MOTOR_STOP, 50);
+		UART_sendByte(GATE_IS_CLOSE);
+		g_tick = 0;
+		timer0_dinit();
+	}
+
+
+}
+
+void open(void)
+{
+	g_tick = 0;
+	SREG |=(1<<7);
+	timer0_setcallback(open_mechanisim);
+	DcMotor_Init();
+	DcMotor_Rotate(DC_MOTOR_CW, 100);
+	timer0_init(&timer_configtype);
+
+}
+
+
+
+void alarm_on(void)
+{
+
+	buzzer_on();
+	_delay_ms(5000);
+	buzzer_off();
+	UART_sendByte(SAFE);
+	timer0_dinit();
+}
+
+
+
+int main(void)
+{
+
+	SREG |=(1<<7);
+	buzzer_init();
+	UART_ConfigType uart_configtype={9600,EIGHT_BITS,DISABLE,ONE_BIT};
+	UART_init(&uart_configtype);
+	TWI_ConfigerType twi_configtype = {0x02,0x00,0x01};
+	TWI_init(&twi_configtype);
+
+	LCD_init();
+
+	while(1)
+	{
+		switch(UART_receiveByte())
+		{
+		case NEW_PASSWORD:
+			save_password();
+			show_pass(password);
+			break;
+		case COMPARE:
+			get_password();
+			break;
+		case OPEN_DOOR:
+			open();
+			break;
+		case  WARNING:
+			alarm_on();
+			break;
+
+		}
+
+	}
+}
+

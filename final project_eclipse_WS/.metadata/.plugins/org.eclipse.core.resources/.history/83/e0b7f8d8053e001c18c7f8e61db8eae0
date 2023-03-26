@@ -1,0 +1,123 @@
+/****************************************************************************************
+ * File Name: controller.h
+ *
+ * Description: header file for controller driver
+ *
+ * Author: Eng / Sohail Talaat
+ *
+ * *************************************************************************************/
+
+#include"controller.h"
+
+/***************************************************************************************
+ *                      Functions Definitions
+ ***************************************************************************************/
+
+TIMER0_ConfigerType timer_configtype = {OVERFLOW_MOOD, CLOCK_1024, 0, 250};
+
+volatile static uint32 g_tick = 0;
+uint8 entered_password[PASSWORD_SIZE];
+uint8 password[PASSWORD_SIZE];
+
+void get_password(void)
+{
+	uint8 i;
+
+	for(i = 0; i < PASSWORD_SIZE - 1; i++)
+	{
+		UART_sendByte(ready);
+		entered_password[i] = UART_receiveByte();
+	}
+	entered_password[i] = '\0';
+	if(strcmp(password,entered_password) == 0)
+	{
+		while(UART_receiveByte() != ready);
+		UART_sendByte(MATCHED);
+	}
+	else
+	{
+		while(UART_receiveByte() != ready);
+		UART_sendByte(NOT_MATCHED);
+	}
+}
+
+void save_password(void)
+{
+	uint8 i;
+	for(i = 0; i < PASSWORD_SIZE - 1; i++)
+	{
+		UART_sendByte(ready);
+		EEPROM_writeByte((EEPROM_ADDRESS) + i, UART_receiveByte());
+		_delay_ms(10);
+	}
+	for( i = 0; i < 5; i++)
+	{
+		EEPROM_readByte((EEPROM_ADDRESS) + i, &password[i]);
+		_delay_ms(10);
+
+	}
+	password[i] = '\0';
+}
+
+
+
+void open_mechanisim(void)
+{
+	g_tick++;
+	if(g_tick == FIFTEEN_SECONDS)
+	{
+		DcMotor_Rotate(DC_MOTOR_STOP);
+		UART_sendByte(GATE_IS_OPEN);
+	}
+	if(g_tick == (FIFTEEN_SECONDS+THREE_SECONDS))
+	{
+		DcMotor_Rotate(DC_MOTOR_ACW);
+	}
+	if(g_tick == (FIFTEEN_SECONDS+THREE_SECONDS+FIFTEEN_SECONDS))
+	{
+		DcMotor_Rotate(DC_MOTOR_STOP);
+		UART_sendByte(GATE_IS_CLOSE);
+		g_tick = 0;
+		timer0_dinit();
+	}
+
+
+}
+
+void open(void)
+{
+	g_tick = 0;
+	SREG |=(1<<7);
+	timer0_setcallback(open_mechanisim);
+	DcMotor_Init();
+	DcMotor_Rotate(DC_MOTOR_CW);
+	timer0_init(&timer_configtype);
+
+}
+
+void alarm_off(void)
+{
+	g_tick++;
+	if(g_tick == ONE_MINUTE)
+	{
+		buzzer_off();
+		UART_sendByte(SAFE);
+		timer0_dinit();
+		g_tick = 0;
+	}
+
+}
+
+void alarm_on(void)
+{
+	g_tick = 0;
+	buzzer_init();
+	buzzer_on();
+	timer0_setcallback(alarm_off);
+	timer0_init(&timer_configtype);
+}
+
+
+
+
+

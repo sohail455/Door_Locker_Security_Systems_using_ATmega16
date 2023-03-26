@@ -1,0 +1,36 @@
+/****************************************************************************************
+ * File Name: keypad.h
+ *
+ * Description: header file for keypad.
+ *
+ * Author: Eng / Sohail Talaat.
+ *
+ * *************************************************************************************/
+
+#ifndef KEYPAD_H_
+#define KEYPAD_H_
+#include"std_types.h"
+
+/*******************************************************************************
+ *                                Definitions                                  *
+ *******************************************************************************/
+
+#define KEYPAD_NUM_OF_COLS  4
+#define KEYPAD_NUM_OF_ROWS  4
+
+#define KEYPAD_PORT_ID  PORTA_ID
+#define KEYPAD_FIRST_COLUMN_PIN_ID  PIN4_ID
+#define KEYPAD_FIRST_ROW_PIN_ID  PIN0_ID
+
+#define KEYPAD_BUTTON_PRESSED  LOGIC_LOW
+#define KEYPAD_BUTTON_RELEASED  LOGIC_LOW
+
+/*******************************************************************************
+ *                      Functions Prototypes                                   *
+ *******************************************************************************/
+
+uint8 KEYPAD_getPressedKey(void);
+
+
+
+#endif /* KEYPAD_H_ */

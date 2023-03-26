@@ -1,0 +1,164 @@
+/****************************************************************************************
+ * File Name:
+ *
+ * Description:
+ *
+ * Author: Eng / Sohail Talaat
+ *
+ * *************************************************************************************/
+#define F_CPU 8000000UL
+#include"lcd.h"
+#include"uart.h"
+#include<string.h>
+#include"keypad.h"
+#include<util/delay.h>
+#define NEW_PASSWORD 0x01
+#define ready  0x02
+#define COMPARE  0x03
+#define MATCHED 0x04
+#define NOT_MATCHED 0x05
+#define THIEF 0x06
+#define WAIT 0x07
+#define PASSWORD_SIZE  6
+uint8 counter = 0;
+
+
+void open_door_option(void)
+{
+	uint8 entered_pass[PASSWORD_SIZE];
+	++counter;
+	if(counter == 4)
+	{
+
+		LCD_clearScreen();
+		LCD_displayString("Thief");
+		_delay_ms(1000);
+		counter = 0;
+		main_option();
+	}
+
+	LCD_clearScreen();
+	LCD_displayString("confirm pass");
+	LCD_moveCursor(1, 0);
+	get_password(entered_pass);
+	UART_sendByte(COMPARE);
+	send_password(entered_pass);
+
+	UART_sendByte(ready);
+
+	if(UART_receiveByte() == MATCHED)
+	{
+		LCD_clearScreen();
+		LCD_displayString("openning door");
+		_delay_ms(500);
+		main_option();
+	}
+	else
+	{
+		LCD_clearScreen();
+		LCD_displayString("Wrong pass!");
+		_delay_ms(1000);
+		open_door_option();
+	}
+
+}
+
+void get_password(uint8 *password)
+{
+	uint8 key;
+	uint8 i;
+	for(i = 0; i < PASSWORD_SIZE - 1; i++)
+	{
+		key = KEYPAD_getPressedKey();
+		password[i] = key;
+		LCD_displayCharacter('*');
+		_delay_ms(500);
+	}
+	password[i] = '\0';
+}
+
+void send_password(uint8 *password)
+{
+	uint8 i;
+	for(i = 0; i < PASSWORD_SIZE - 1; i++)
+	{
+		if(UART_receiveByte() == ready)
+			UART_sendByte(password[i]);
+	}
+}
+
+void get_initial_password(void)
+{
+	uint8 password[PASSWORD_SIZE];
+	uint8 confirm_password[PASSWORD_SIZE];
+	LCD_clearScreen();
+	LCD_displayString("enter pass:");
+	LCD_moveCursor(1, 0);
+	get_password(password);
+
+	LCD_clearScreen();
+	LCD_displayString("confirm pass:");
+	LCD_moveCursor(1, 0);
+	get_password(confirm_password);
+	LCD_clearScreen();
+
+	if(strcmp(password,confirm_password) != 0)
+	{
+		LCD_displayString("No Match!");
+		_delay_ms(500);
+		LCD_clearScreen();
+		LCD_displayString("Please re-enter");
+		LCD_moveCursor(1, 0);
+		LCD_displayString("Password");
+		_delay_ms(1000);
+		get_initial_password();
+	}
+	else
+	{
+		LCD_displayString("Right Pass");
+		_delay_ms(1000);
+		LCD_clearScreen();
+		UART_sendByte(NEW_PASSWORD);
+		send_password(password);
+	}
+}
+
+void main_option(void)
+{
+
+	LCD_clearScreen();
+	LCD_displayString("+:open door");
+	LCD_moveCursor(1, 0);
+	LCD_displayString("-:change pass");
+
+	while(KEYPAD_getPressedKey() != '-'  && KEYPAD_getPressedKey() != '+')
+	{
+
+	}
+
+	if(KEYPAD_getPressedKey() == '+')
+	{
+		_delay_ms(400);
+		open_door_option();
+	}
+	else if(KEYPAD_getPressedKey() == '-')
+	{
+		_delay_ms(500);
+		//		reset_password_option();
+	}
+
+}
+
+int main(void)
+{
+	UART_ConfigType uart_configtype={9600,EIGHT_BITS,DISABLE,ONE_BIT};
+	UART_init(&uart_configtype);
+	LCD_init();
+	get_initial_password();
+	while(1)
+	{
+		main_option();
+
+	}
+}
+

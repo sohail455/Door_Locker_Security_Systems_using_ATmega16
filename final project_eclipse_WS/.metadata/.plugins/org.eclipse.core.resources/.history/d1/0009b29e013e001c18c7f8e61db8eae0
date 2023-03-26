@@ -1,0 +1,25 @@
+/****************************************************************************************
+ * File Name: buzzer.h
+ *
+ * Description: header file for buzzer driver
+ *
+ * Author: Eng / Sohail Talaat
+ *
+ * *************************************************************************************/
+
+#ifndef BUZZER_H_
+#define BUZZER_H_
+#include"std_types.h"
+/*******************************************************************************
+ *                                Definitions                                  *
+ *******************************************************************************/
+#define BUZZER_PORT_ID  PORTD_ID
+#define BUZZER_PIN_ID   PIN5_ID
+/*******************************************************************************
+ *                      Functions Prototypes                                   *
+ *******************************************************************************/
+void buzzer_init(void);
+void buzzer_on(void);
+void buzzer_off(void);
+
+#endif /* BUZZER_H_ */

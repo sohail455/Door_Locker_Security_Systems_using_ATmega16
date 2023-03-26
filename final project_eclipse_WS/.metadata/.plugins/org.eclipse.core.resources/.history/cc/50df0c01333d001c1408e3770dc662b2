@@ -1,0 +1,63 @@
+/*
+ * timer0.c
+ *
+ *  Created on: 1 Nov 2021
+ *      Author: pvc
+ */
+#define F_CPU 8000000UL
+#include"timer0.h"
+#include<avr/io.h>
+#include<avr/interrupt.h>
+
+
+
+volatile void(*g_callBackPtr)(void) = NULL_PTR;
+
+
+ISR(TIMER0_OVF_vect)
+{
+		if(g_callBackPtr != NULL_PTR)
+		{
+			(*g_callBackPtr)();
+		}
+}
+
+ISR(TIMER0_COMP_vect)
+{
+		if(g_callBackPtr != NULL_PTR)
+		{
+			(*g_callBackPtr)();
+		}
+}
+void timer0_init(TIMER0_ConfigerType *configType)
+{
+	if((configType -> mood) == OVERFLOW_MOOD)
+	{
+		TCNT0 = configType ->initial_value;
+		TCCR0 = ((configType ->prescaler) & 0x07);
+		TCCR0 |=(1<<FOC0);
+		TIMSK |=(1<<TOIE0);
+	}
+	else if((configType -> mood) == COMPARE_MOOD)
+	{
+		TCNT0 = 0;
+		OCR0 = (configType ->compare_value);
+		TCCR0 = ((configType ->prescaler) & 0x07);
+		TCCR0 |= (1<<WGM01) | (1<<COM00) | (1<<FOC0);
+		TIMSK |= (1<<OCIE0);
+	}
+}
+
+void timer0_setcallback(void(*a_ptr)(void))
+{
+	g_callBackPtr = a_ptr;
+}
+
+void timer0_dinit(void)
+{
+	TCNT0 = 0;
+	OCR0 = 0;
+	TCCR0 = 0;
+	TIMSK &=~(1<<TOIE0) ;
+	TIMSK &= ~(1<<OCIE0);
+}

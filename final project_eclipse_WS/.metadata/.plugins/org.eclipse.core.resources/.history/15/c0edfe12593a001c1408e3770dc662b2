@@ -1,0 +1,200 @@
+/*
+ * kepad_with-eeprom.c
+ *
+ *  Created on: 30 Oct 2021
+ *      Author: pvc
+ */
+#define F_CPU 8000000UL
+#include"lcd.h"
+#include"gpio.h"
+#include"external_eeprom.h"
+#include"keypad.h"
+#include"uart.h"
+#include<util/delay.h>
+#include<string.h>
+
+#define MCU2_READY 0x10
+#define SEND_PASS 0x11
+#define MCU1_READY 0x12
+#define CHANGE_PASS 0x13
+#define MAIN_OPTION 0x14
+#define SEND_OPTION 0x15
+#define WAIT 0x16
+#define OPEN_DOOR 0x18
+#define ERROR 0x19
+uint8 key = 0;
+uint8 password[6];
+uint8 check_password[6];
+uint8 reenterred_password[6];
+uint8 i;
+uint8 flag = 0;
+
+void enter_first_pass(void)
+{
+	LCD_clearScreen();
+	LCD_displayString("enter pass:");
+	LCD_moveCursor(1, 0);
+	for(i = 0; i < 5; i++)
+	{
+		key = KEYPAD_getPressedKey();
+		password[i] = key;
+		LCD_displayCharacter('*');
+		_delay_ms(500);
+	}
+	password[i] = '\0';
+	LCD_clearScreen();
+	LCD_displayString("re-enter pass:");
+	LCD_moveCursor(1, 0);
+	for(int i = 0; i < 5;i++)
+	{
+		key = KEYPAD_getPressedKey();
+		check_password[i] = key;
+		LCD_displayCharacter('*');
+		_delay_ms(500);
+	}
+	check_password[i] = '\0';
+	if(strcmp(password,check_password) == 0)
+	{
+		LCD_clearScreen();
+		LCD_displayString("Pass correct");
+		_delay_ms(500);
+		UART_sendByte(MCU1_READY);
+		for(i = 0; i < 5; i++)
+		{
+			if(UART_receiveByte() == MCU2_READY)
+				UART_sendByte(password[i]);
+		}
+	}
+	else
+	{
+		LCD_clearScreen();
+		LCD_displayString("Pass wrong");
+		_delay_ms(1000);
+		LCD_clearScreen();
+		LCD_displayString("re-enter pass:");
+		LCD_moveCursor(1, 0);
+		for(int i = 0; i < 5;i++)
+		{
+			key = KEYPAD_getPressedKey();
+			check_password[i] = key;
+			LCD_displayCharacter('*');
+			_delay_ms(500);
+		}
+		check_password[i] = '\0';
+		if(strcmp(password,check_password) == 0)
+		{
+			LCD_clearScreen();
+			LCD_displayString("Pass correct");
+			_delay_ms(1000);
+			UART_sendByte(MCU1_READY);
+			for(i = 0; i < 5; i++)
+			{
+				if(UART_receiveByte() == MCU2_READY)
+					UART_sendByte(password[i]);
+			}
+		}
+		else
+		{
+			LCD_clearScreen();
+			LCD_displayString("wrong pass");
+		}
+	}
+}
+
+
+void main_option(void)
+{
+	LCD_clearScreen();
+	LCD_displayString("+:open door");
+	LCD_moveCursor(1, 0);
+	LCD_displayString("-:change pass");
+
+	if(UART_receiveByte() == MCU2_READY)
+	{
+		key = KEYPAD_getPressedKey();
+		UART_sendByte(key);
+	}
+	_delay_ms(500);
+}
+
+void reenter_password(void)
+{
+	LCD_clearScreen();
+	LCD_displayString("enter pass:");
+	LCD_moveCursor(1, 0);
+	for(i = 0; i < 5; i++)
+	{
+		key = KEYPAD_getPressedKey();
+		reenterred_password[i] = key;
+
+		LCD_displayCharacter('*');
+		_delay_ms(500);
+	}
+	reenterred_password[i] = '\0';
+}
+
+int main(void)
+{
+
+	UART_ConfigType ConfigType = {9600,EIGHT_BITS,DISABLE,ONE_BIT};
+	UART_init(&ConfigType);
+	LCD_init();
+
+	if(UART_receiveByte() == SEND_PASS)
+		enter_first_pass();
+
+	while(1)
+	{
+
+		UART_sendByte(WAIT);
+		if(UART_receiveByte() == MAIN_OPTION)
+		{
+			main_option();
+			if(UART_receiveByte() == CHANGE_PASS)
+			{
+				reenter_password();
+				if(strcmp(password,reenterred_password) == 0)
+				{
+
+					enter_first_pass();
+				}
+				else
+				{
+					LCD_clearScreen();
+					LCD_displayString("ERROR");
+					_delay_ms(500);
+
+					if(strcmp(password,reenterred_password) == 0)
+					{
+						enter_first_pass();
+					}
+					else if(strcmp(password,reenterred_password) != 0)
+					{
+						UART_sendByte(ERROR);
+
+					}
+				}
+
+
+			}
+			else if(UART_receiveByte() == OPEN_DOOR)
+			{
+				reenter_password();
+				if(strcmp(password,reenterred_password) == 0)
+				{
+					LCD_clearScreen();
+					LCD_displayString("Openinng Door");
+					_delay_ms(500);
+				}
+				else
+				{
+					LCD_displayString("ERROR");
+					_delay_ms(500);
+				}
+
+			}
+
+		}
+	}
+}
+

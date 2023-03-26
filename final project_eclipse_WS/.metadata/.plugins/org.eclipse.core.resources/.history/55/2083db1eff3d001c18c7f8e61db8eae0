@@ -1,0 +1,61 @@
+/****************************************************************************************
+ * File Name: uart.h
+ *
+ * Description: header file for uart driver
+ *
+ * Author: Eng / Sohail Talaat
+ *
+ * *************************************************************************************/
+
+#ifndef UART_H_
+#define UART_H_
+#include"std_types.h"
+
+/*******************************************************************************
+ *                         Types Declaration                                   *
+ *******************************************************************************/
+
+typedef enum
+{
+	DISABLE,EVEN_PARITY=2,ODD_PARITY
+
+}UART_ParityMood;
+
+typedef enum
+{
+	ONE_BIT,TWO_BITS
+
+}UART_StopBitNum;
+
+typedef enum
+{
+	FIVE_BITS,SIX_BITS,SEVEN_BITS,EIGHT_BITS,NINE_BITS=7
+
+}UART_CharacterSize;
+
+typedef struct
+{
+	uint32 baude_rate;
+	UART_CharacterSize character_size;
+	UART_ParityMood parity_mood;
+	UART_StopBitNum  stop_bit_num;
+
+}UART_ConfigType;
+
+/*******************************************************************************
+ *                      Functions Prototypes                                   *
+ *******************************************************************************/
+
+void UART_init(const UART_ConfigType *ConfigType);
+
+uint8 UART_receiveByte(void);
+
+void UART_sendByte(uint8 data);
+
+void UART_sendString(uint8 *Str);
+
+void UART_receiveString(uint8 *Str);
+
+
+
+#endif /* UART_H_ */

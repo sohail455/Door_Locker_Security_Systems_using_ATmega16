@@ -1,0 +1,61 @@
+/****************************************************************************************
+ * File Name: timer0.h
+ *
+ * Description: source file for timer0 driver
+ *
+ * Author: Eng / Sohail Talaat
+ *
+ * *************************************************************************************/
+#define F_CPU 8000000UL
+#ifndef TIMER0_H_
+#define TIMER0_H_
+#include"std_types.h"
+
+/*******************************************************************************
+ *                         Types Declaration                                   *
+ *******************************************************************************/
+
+typedef enum
+{
+	COMPARE_MOOD,OVERFLOW_MOOD
+}TIMER0_MoodType;
+
+typedef enum
+{
+	NO_CLOCK,NO_PRESCALLING,CLOCK_8,CLOCK_64,CLOCK_256CLOCK_,CLOCK_1024
+}TIMER0_PreScaler;
+
+typedef struct
+{
+	TIMER0_MoodType mood;
+	TIMER0_PreScaler prescaler;
+	uint8 initial_value;
+	uint8 compare_value;
+
+}TIMER0_ConfigerType;
+
+/*******************************************************************************
+ *                      Functions Prototypes                                   *
+ *******************************************************************************/
+
+/*
+ * Description :
+ * initialize the timer registers according to the mood.
+ * 1- put the prescaler.
+ * 2- put the initial value.
+ * 3- if compare mood put the compare value
+ * 4- enable overflow mood or compare mood interrupt.
+ */
+void timer0_init(TIMER0_ConfigerType *configType);
+/*
+ * Description :
+ * set the callback function to execute it in the ISR.
+ */
+void timer0_setcallback(void(*a_ptr)(void));
+/*
+ * Description :
+ * disable timer0.
+ */
+void timer0_dinit(void);
+
+#endif /* TIMER0_H_ */

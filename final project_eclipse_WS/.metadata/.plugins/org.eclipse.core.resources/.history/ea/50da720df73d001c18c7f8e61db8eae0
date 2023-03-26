@@ -1,0 +1,34 @@
+/*
+ * timer0.h
+ *
+ *  Created on: 1 Nov 2021
+ *      Author: pvc
+ */
+
+#ifndef TIMER0_H_
+#define TIMER0_H_
+#include"std_types.h"
+
+typedef enum
+{
+	COMPARE_MOOD,OVERFLOW_MOOD
+}TIMER0_MoodType;
+
+typedef enum
+{
+	NO_CLOCK,NO_PRESCALLING,CLOCK_8,CLOCK_64,CLOCK_256CLOCK_,CLOCK_1024
+}TIMER0_PreScaler;
+
+typedef struct
+{
+	TIMER0_MoodType mood;
+	TIMER0_PreScaler prescaler;
+	uint8 initial_value;
+	uint8 compare_value;
+
+}TIMER0_ConfigerType;
+
+void timer0_init(TIMER0_ConfigerType *configType);
+void timer0_setcallback(void(*a_ptr)(void));
+void timer0_dinit(void);
+#endif /* TIMER0_H_ */

@@ -1,0 +1,230 @@
+16:41:01 **** Build of configuration Debug for project demo ****
+make all 
+Building file: ../pro2/external_eeprom.c
+Invoking: AVR Compiler
+avr-gcc -Wall -g2 -gstabs -O0 -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega16 -DF_CPU=1000000UL -MMD -MP -MF"pro2/external_eeprom.d" -MT"pro2/external_eeprom.o" -c -o "pro2/external_eeprom.o" "../pro2/external_eeprom.c"
+Finished building: ../pro2/external_eeprom.c
+ 
+Building file: ../pro2/gpio.c
+Invoking: AVR Compiler
+avr-gcc -Wall -g2 -gstabs -O0 -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega16 -DF_CPU=1000000UL -MMD -MP -MF"pro2/gpio.d" -MT"pro2/gpio.o" -c -o "pro2/gpio.o" "../pro2/gpio.c"
+Finished building: ../pro2/gpio.c
+ 
+Building file: ../pro2/keypad.c
+Invoking: AVR Compiler
+avr-gcc -Wall -g2 -gstabs -O0 -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega16 -DF_CPU=1000000UL -MMD -MP -MF"pro2/keypad.d" -MT"pro2/keypad.o" -c -o "pro2/keypad.o" "../pro2/keypad.c"
+Finished building: ../pro2/keypad.c
+ 
+Building file: ../pro2/lcd.c
+Invoking: AVR Compiler
+avr-gcc -Wall -g2 -gstabs -O0 -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega16 -DF_CPU=1000000UL -MMD -MP -MF"pro2/lcd.d" -MT"pro2/lcd.o" -c -o "pro2/lcd.o" "../pro2/lcd.c"
+In file included from ../pro2/lcd.c:8:
+c:/winavr-20100110/lib/gcc/../../avr/include/util/delay.h:90:3: warning: #warning "Compiler optimizations disabled; functions from <util/delay.h> won't work as designed"
+../pro2/lcd.c: In function 'LCD_sendCommand':
+../pro2/lcd.c:37: warning: unused variable 'lcd_port_value'
+../pro2/lcd.c: In function 'LCD_displayCharacter':
+../pro2/lcd.c:80: warning: unused variable 'lcd_port_value'
+../pro2/lcd.c: In function 'LCD_intgerToString':
+../pro2/lcd.c:159: warning: implicit declaration of function 'itoa'
+../pro2/lcd.c:160: warning: pointer targets in passing argument 1 of 'LCD_displayString' differ in signedness
+Finished building: ../pro2/lcd.c
+ 
+Building file: ../pro2/pro2.c
+Invoking: AVR Compiler
+avr-gcc -Wall -g2 -gstabs -O0 -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega16 -DF_CPU=1000000UL -MMD -MP -MF"pro2/pro2.d" -MT"pro2/pro2.o" -c -o "pro2/pro2.o" "../pro2/pro2.c"
+../pro2/pro2.c:8:1: warning: "F_CPU" redefined
+<command-line>: warning: this is the location of the previous definition
+In file included from ../pro2/pro2.c:15:
+c:/winavr-20100110/lib/gcc/../../avr/include/util/delay.h:90:3: warning: #warning "Compiler optimizations disabled; functions from <util/delay.h> won't work as designed"
+../pro2/pro2.c:25:1: warning: "ERROR" redefined
+In file included from ../pro2/pro2.c:10:
+../pro2/external_eeprom.h:22:1: warning: this is the location of the previous definition
+Finished building: ../pro2/pro2.c
+ 
+Building file: ../pro2/twi.c
+Invoking: AVR Compiler
+avr-gcc -Wall -g2 -gstabs -O0 -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega16 -DF_CPU=1000000UL -MMD -MP -MF"pro2/twi.d" -MT"pro2/twi.o" -c -o "pro2/twi.o" "../pro2/twi.c"
+../pro2/twi.c:14:1: warning: "F_CPU" redefined
+<command-line>: warning: this is the location of the previous definition
+Finished building: ../pro2/twi.c
+ 
+Building file: ../pro2/uart.c
+Invoking: AVR Compiler
+avr-gcc -Wall -g2 -gstabs -O0 -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega16 -DF_CPU=1000000UL -MMD -MP -MF"pro2/uart.d" -MT"pro2/uart.o" -c -o "pro2/uart.o" "../pro2/uart.c"
+../pro2/uart.c:7:1: warning: "F_CPU" redefined
+<command-line>: warning: this is the location of the previous definition
+Finished building: ../pro2/uart.c
+ 
+Building file: ../kepad_with-eeprom/external_eeprom.c
+Invoking: AVR Compiler
+avr-gcc -Wall -g2 -gstabs -O0 -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega16 -DF_CPU=1000000UL -MMD -MP -MF"kepad_with-eeprom/external_eeprom.d" -MT"kepad_with-eeprom/external_eeprom.o" -c -o "kepad_with-eeprom/external_eeprom.o" "../kepad_with-eeprom/external_eeprom.c"
+Finished building: ../kepad_with-eeprom/external_eeprom.c
+ 
+Building file: ../kepad_with-eeprom/gpio.c
+Invoking: AVR Compiler
+avr-gcc -Wall -g2 -gstabs -O0 -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega16 -DF_CPU=1000000UL -MMD -MP -MF"kepad_with-eeprom/gpio.d" -MT"kepad_with-eeprom/gpio.o" -c -o "kepad_with-eeprom/gpio.o" "../kepad_with-eeprom/gpio.c"
+Finished building: ../kepad_with-eeprom/gpio.c
+ 
+Building file: ../kepad_with-eeprom/kepad_with-eeprom.c
+Invoking: AVR Compiler
+avr-gcc -Wall -g2 -gstabs -O0 -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega16 -DF_CPU=1000000UL -MMD -MP -MF"kepad_with-eeprom/kepad_with-eeprom.d" -MT"kepad_with-eeprom/kepad_with-eeprom.o" -c -o "kepad_with-eeprom/kepad_with-eeprom.o" "../kepad_with-eeprom/kepad_with-eeprom.c"
+../kepad_with-eeprom/kepad_with-eeprom.c:7:1: warning: "F_CPU" redefined
+<command-line>: warning: this is the location of the previous definition
+In file included from ../kepad_with-eeprom/kepad_with-eeprom.c:13:
+c:/winavr-20100110/lib/gcc/../../avr/include/util/delay.h:90:3: warning: #warning "Compiler optimizations disabled; functions from <util/delay.h> won't work as designed"
+../kepad_with-eeprom/kepad_with-eeprom.c:24:1: warning: "ERROR" redefined
+In file included from ../kepad_with-eeprom/kepad_with-eeprom.c:10:
+../kepad_with-eeprom/external_eeprom.h:22:1: warning: this is the location of the previous definition
+../kepad_with-eeprom/kepad_with-eeprom.c: In function 'enter_first_pass':
+../kepad_with-eeprom/kepad_with-eeprom.c:56: warning: pointer targets in passing argument 1 of 'strcmp' differ in signedness
+../kepad_with-eeprom/kepad_with-eeprom.c:56: warning: pointer targets in passing argument 2 of 'strcmp' differ in signedness
+../kepad_with-eeprom/kepad_with-eeprom.c:84: warning: pointer targets in passing argument 1 of 'strcmp' differ in signedness
+../kepad_with-eeprom/kepad_with-eeprom.c:84: warning: pointer targets in passing argument 2 of 'strcmp' differ in signedness
+../kepad_with-eeprom/kepad_with-eeprom.c: In function 'main':
+../kepad_with-eeprom/kepad_with-eeprom.c:156: warning: pointer targets in passing argument 1 of 'strcmp' differ in signedness
+../kepad_with-eeprom/kepad_with-eeprom.c:156: warning: pointer targets in passing argument 2 of 'strcmp' differ in signedness
+../kepad_with-eeprom/kepad_with-eeprom.c:167: warning: pointer targets in passing argument 1 of 'strcmp' differ in signedness
+../kepad_with-eeprom/kepad_with-eeprom.c:167: warning: pointer targets in passing argument 2 of 'strcmp' differ in signedness
+../kepad_with-eeprom/kepad_with-eeprom.c:171: warning: pointer targets in passing argument 1 of 'strcmp' differ in signedness
+../kepad_with-eeprom/kepad_with-eeprom.c:171: warning: pointer targets in passing argument 2 of 'strcmp' differ in signedness
+../kepad_with-eeprom/kepad_with-eeprom.c:183: warning: pointer targets in passing argument 1 of 'strcmp' differ in signedness
+../kepad_with-eeprom/kepad_with-eeprom.c:183: warning: pointer targets in passing argument 2 of 'strcmp' differ in signedness
+Finished building: ../kepad_with-eeprom/kepad_with-eeprom.c
+ 
+Building file: ../kepad_with-eeprom/keypad.c
+Invoking: AVR Compiler
+avr-gcc -Wall -g2 -gstabs -O0 -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega16 -DF_CPU=1000000UL -MMD -MP -MF"kepad_with-eeprom/keypad.d" -MT"kepad_with-eeprom/keypad.o" -c -o "kepad_with-eeprom/keypad.o" "../kepad_with-eeprom/keypad.c"
+Finished building: ../kepad_with-eeprom/keypad.c
+ 
+Building file: ../kepad_with-eeprom/lcd.c
+Invoking: AVR Compiler
+avr-gcc -Wall -g2 -gstabs -O0 -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega16 -DF_CPU=1000000UL -MMD -MP -MF"kepad_with-eeprom/lcd.d" -MT"kepad_with-eeprom/lcd.o" -c -o "kepad_with-eeprom/lcd.o" "../kepad_with-eeprom/lcd.c"
+../kepad_with-eeprom/lcd.c:7:1: warning: "F_CPU" redefined
+<command-line>: warning: this is the location of the previous definition
+In file included from ../kepad_with-eeprom/lcd.c:8:
+c:/winavr-20100110/lib/gcc/../../avr/include/util/delay.h:90:3: warning: #warning "Compiler optimizations disabled; functions from <util/delay.h> won't work as designed"
+../kepad_with-eeprom/lcd.c: In function 'LCD_sendCommand':
+../kepad_with-eeprom/lcd.c:37: warning: unused variable 'lcd_port_value'
+../kepad_with-eeprom/lcd.c: In function 'LCD_displayCharacter':
+../kepad_with-eeprom/lcd.c:80: warning: unused variable 'lcd_port_value'
+../kepad_with-eeprom/lcd.c: In function 'LCD_intgerToString':
+../kepad_with-eeprom/lcd.c:159: warning: implicit declaration of function 'itoa'
+../kepad_with-eeprom/lcd.c:160: warning: pointer targets in passing argument 1 of 'LCD_displayString' differ in signedness
+Finished building: ../kepad_with-eeprom/lcd.c
+ 
+Building file: ../kepad_with-eeprom/twi.c
+Invoking: AVR Compiler
+avr-gcc -Wall -g2 -gstabs -O0 -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega16 -DF_CPU=1000000UL -MMD -MP -MF"kepad_with-eeprom/twi.d" -MT"kepad_with-eeprom/twi.o" -c -o "kepad_with-eeprom/twi.o" "../kepad_with-eeprom/twi.c"
+Finished building: ../kepad_with-eeprom/twi.c
+ 
+Building file: ../kepad_with-eeprom/uart.c
+Invoking: AVR Compiler
+avr-gcc -Wall -g2 -gstabs -O0 -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega16 -DF_CPU=1000000UL -MMD -MP -MF"kepad_with-eeprom/uart.d" -MT"kepad_with-eeprom/uart.o" -c -o "kepad_with-eeprom/uart.o" "../kepad_with-eeprom/uart.c"
+../kepad_with-eeprom/uart.c:7:1: warning: "F_CPU" redefined
+<command-line>: warning: this is the location of the previous definition
+Finished building: ../kepad_with-eeprom/uart.c
+ 
+Building target: demo.elf
+Invoking: AVR C Linker
+avr-gcc -Wl,-Map,demo.map -mmcu=atmega16 -o "demo.elf"  ./pro2/external_eeprom.o ./pro2/gpio.o ./pro2/keypad.o ./pro2/lcd.o ./pro2/pro2.o ./pro2/twi.o ./pro2/uart.o  ./kepad_with-eeprom/external_eeprom.o ./kepad_with-eeprom/gpio.o ./kepad_with-eeprom/kepad_with-eeprom.o ./kepad_with-eeprom/keypad.o ./kepad_with-eeprom/lcd.o ./kepad_with-eeprom/twi.o ./kepad_with-eeprom/uart.o   
+./kepad_with-eeprom/external_eeprom.o: In function `EEPROM_writeByte':
+../kepad_with-eeprom/external_eeprom.c:16: multiple definition of `EEPROM_writeByte'
+./pro2/external_eeprom.o:../pro2/external_eeprom.c:16: first defined here
+./kepad_with-eeprom/external_eeprom.o: In function `EEPROM_writeByte':
+../kepad_with-eeprom/external_eeprom.c:16: multiple definition of `EEPROM_readByte'
+./pro2/external_eeprom.o:../pro2/external_eeprom.c:16: first defined here
+./kepad_with-eeprom/gpio.o: In function `GPIO_setupPinDirection':
+../kepad_with-eeprom/gpio.c:23: multiple definition of `GPIO_setupPinDirection'
+./pro2/gpio.o:../pro2/gpio.c:23: first defined here
+./kepad_with-eeprom/gpio.o: In function `GPIO_setupPinDirection':
+../kepad_with-eeprom/gpio.c:23: multiple definition of `GPIO_writePin'
+./pro2/gpio.o:../pro2/gpio.c:23: first defined here
+./kepad_with-eeprom/gpio.o: In function `GPIO_setupPinDirection':
+../kepad_with-eeprom/gpio.c:23: multiple definition of `GPIO_readPin'
+./pro2/gpio.o:../pro2/gpio.c:23: first defined here
+./kepad_with-eeprom/gpio.o: In function `GPIO_setupPinDirection':
+../kepad_with-eeprom/gpio.c:23: multiple definition of `GPIO_setupPortDirection'
+./pro2/gpio.o:../pro2/gpio.c:23: first defined here
+./kepad_with-eeprom/gpio.o: In function `GPIO_setupPinDirection':
+../kepad_with-eeprom/gpio.c:23: multiple definition of `GPIO_writePort'
+./pro2/gpio.o:../pro2/gpio.c:23: first defined here
+./kepad_with-eeprom/gpio.o: In function `GPIO_setupPinDirection':
+../kepad_with-eeprom/gpio.c:23: multiple definition of `GPIO_readPort'
+./pro2/gpio.o:../pro2/gpio.c:23: first defined here
+./kepad_with-eeprom/kepad_with-eeprom.o: In function `enter_first_pass':
+../kepad_with-eeprom/kepad_with-eeprom.c:33: multiple definition of `flag'
+./pro2/pro2.o:../pro2/pro2.c:36: first defined here
+./kepad_with-eeprom/kepad_with-eeprom.o: In function `enter_first_pass':
+../kepad_with-eeprom/kepad_with-eeprom.c:33: multiple definition of `main'
+./pro2/pro2.o:../pro2/pro2.c:36: first defined here
+./kepad_with-eeprom/keypad.o: In function `KEYPAD_getPressedKey':
+../kepad_with-eeprom/keypad.c:19: multiple definition of `KEYPAD_getPressedKey'
+./pro2/keypad.o:../pro2/keypad.c:19: first defined here
+./kepad_with-eeprom/lcd.o: In function `LCD_customChar':
+../kepad_with-eeprom/lcd.c:169: multiple definition of `LCD_init'
+./pro2/lcd.o:../pro2/lcd.c:169: first defined here
+./kepad_with-eeprom/lcd.o: In function `LCD_customChar':
+../kepad_with-eeprom/lcd.c:169: multiple definition of `LCD_sendCommand'
+./pro2/lcd.o:../pro2/lcd.c:169: first defined here
+./kepad_with-eeprom/lcd.o: In function `LCD_customChar':
+../kepad_with-eeprom/lcd.c:169: multiple definition of `LCD_displayCharacter'
+./pro2/lcd.o:../pro2/lcd.c:169: first defined here
+./kepad_with-eeprom/lcd.o: In function `LCD_customChar':
+../kepad_with-eeprom/lcd.c:169: multiple definition of `LCD_displayString'
+./pro2/lcd.o:../pro2/lcd.c:169: first defined here
+./kepad_with-eeprom/lcd.o: In function `LCD_customChar':
+../kepad_with-eeprom/lcd.c:169: multiple definition of `LCD_moveCursor'
+./pro2/lcd.o:../pro2/lcd.c:169: first defined here
+./kepad_with-eeprom/lcd.o: In function `LCD_customChar':
+../kepad_with-eeprom/lcd.c:169: multiple definition of `LCD_displayStringRowColumn'
+./pro2/lcd.o:../pro2/lcd.c:169: first defined here
+./kepad_with-eeprom/lcd.o: In function `LCD_customChar':
+../kepad_with-eeprom/lcd.c:169: multiple definition of `LCD_intgerToString'
+./pro2/lcd.o:../pro2/lcd.c:169: first defined here
+./kepad_with-eeprom/lcd.o: In function `LCD_customChar':
+../kepad_with-eeprom/lcd.c:169: multiple definition of `LCD_clearScreen'
+./pro2/lcd.o:../pro2/lcd.c:169: first defined here
+./kepad_with-eeprom/lcd.o: In function `LCD_customChar':
+../kepad_with-eeprom/lcd.c:169: multiple definition of `LCD_customChar'
+./pro2/lcd.o:../pro2/lcd.c:169: first defined here
+./kepad_with-eeprom/twi.o: In function `TWI_init':
+../kepad_with-eeprom/twi.c:19: multiple definition of `TWI_init'
+./pro2/twi.o:../pro2/twi.c:19: first defined here
+./kepad_with-eeprom/twi.o: In function `TWI_init':
+../kepad_with-eeprom/twi.c:19: multiple definition of `TWI_start'
+./pro2/twi.o:../pro2/twi.c:19: first defined here
+./kepad_with-eeprom/twi.o: In function `TWI_init':
+../kepad_with-eeprom/twi.c:19: multiple definition of `TWI_stop'
+./pro2/twi.o:../pro2/twi.c:19: first defined here
+./kepad_with-eeprom/twi.o: In function `TWI_init':
+../kepad_with-eeprom/twi.c:19: multiple definition of `TWI_writeByte'
+./pro2/twi.o:../pro2/twi.c:19: first defined here
+./kepad_with-eeprom/twi.o: In function `TWI_init':
+../kepad_with-eeprom/twi.c:19: multiple definition of `TWI_readByteWithACK'
+./pro2/twi.o:../pro2/twi.c:19: first defined here
+./kepad_with-eeprom/twi.o: In function `TWI_init':
+../kepad_with-eeprom/twi.c:19: multiple definition of `TWI_readByteWithNACK'
+./pro2/twi.o:../pro2/twi.c:19: first defined here
+./kepad_with-eeprom/twi.o: In function `TWI_init':
+../kepad_with-eeprom/twi.c:19: multiple definition of `TWI_getStatus'
+./pro2/twi.o:../pro2/twi.c:19: first defined here
+./kepad_with-eeprom/uart.o: In function `UART_init':
+../kepad_with-eeprom/uart.c:13: multiple definition of `UART_init'
+./pro2/uart.o:../pro2/uart.c:13: first defined here
+./kepad_with-eeprom/uart.o: In function `UART_init':
+../kepad_with-eeprom/uart.c:13: multiple definition of `UART_receiveByte'
+./pro2/uart.o:../pro2/uart.c:13: first defined here
+./kepad_with-eeprom/uart.o: In function `UART_init':
+../kepad_with-eeprom/uart.c:13: multiple definition of `UART_sendByte'
+./pro2/uart.o:../pro2/uart.c:13: first defined here
+./kepad_with-eeprom/uart.o: In function `UART_init':
+../kepad_with-eeprom/uart.c:13: multiple definition of `UART_sendString'
+./pro2/uart.o:../pro2/uart.c:13: first defined here
+./kepad_with-eeprom/uart.o: In function `UART_init':
+../kepad_with-eeprom/uart.c:13: multiple definition of `UART_receiveString'
+./pro2/uart.o:../pro2/uart.c:13: first defined here
+make: *** [demo.elf] Error 1
+"make all" terminated with exit code 2. Build might be incomplete.
+
+16:41:03 Build Failed. 65 errors, 34 warnings. (took 2s.625ms)
+
